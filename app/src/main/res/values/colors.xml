@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <color name="dark_blue_primary">#203bda</color>
+    <color name="light_offwhite_50_pct">#80f8f8f8</color>
+    <color name="light_off_white_core">#f8f8f8</color>
+
+    <color name="color_vi_primary">#8B96C9</color>
+    <color name="elite_vi_primary">#262526</color>
+    <color name="et_text_vi">#414143</color>
+    <color name="et_hint_color">#666666</color>
+    <color name="progress_bar_vi_color">#6CC89C</color>
+    <color name="vi_alert_red">#FF4A6A</color>
+    <color name="bg_vi_create_message">#262526</color>
+    <color name="bg_vi_message_card">#161616</color>
+</resources>

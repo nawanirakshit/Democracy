@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Democracy</string>
+
+    <string name="perm_location_desc">Location access will help Nirmata track your live location. In order to use the app, its mandatory \nto allow location access!</string>
+    <string name="allow_location">Allow Location Access</string>
+
+    <string name="allow_storage">Allow Storage</string>
+    <string name="perm_storage_desc">Allow gallery and camera permission to set/update your images!</string>
+
+    <string name="allow_notification">Allow Notifications</string>
+    <string name="perm_notification_desc">Receive important updates from Nirmata.</string>
+
+    <string name="allow">Allow</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="cancel">Cancel</string>
+
+    <!--Login Fragment strings -->
+    <string name="login_fragment_error">Incorrect username or password. \nPlease try again.</string>
+    <string name="form_email">Email Address</string>
+    <string name="form_password">Password</string>
+    <string name="login_fragment_forgot_password">Forgot password?</string>
+    <string name="fragment_register_login">Login</string>
+</resources>
