@@ -2,7 +2,10 @@ package `in`.democracy.app.config
 
 object IntentKey {
     const val PERM_KEY = "perm_key"
-    const val LOGGED_IN = "loggedIn"
+    const val PERM_STATE = "state"
+    const val PERM_DISTRICT = "district"
+    const val PERM_CITY = "city"
+    const val PERM_WARD = "ward"
 }
 
 object APIEndPoints {

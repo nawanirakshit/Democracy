@@ -517,15 +517,13 @@ fun disableFullScreen(activity: Activity) {
 fun AppCompatActivity.onBackPressed(isEnabled: Boolean, callback: () -> Unit) {
     onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(isEnabled) {
         override fun handleOnBackPressed() {
-            println("onBackPressed >>>>>>>>>")
             callback()
         }
     })
 }
 
 fun AppCompatActivity.checkBackPressEvent() {
-    println("checkBackPressEvent >>>>>>>>>")
-    if (supportFragmentManager.backStackEntryCount == 0) {
+    if (supportFragmentManager.backStackEntryCount == 1) {
         finish()
     } else {
         supportFragmentManager.popBackStack()

@@ -1,4 +1,4 @@
-package in.democracy.app.viewmodel
+package `in`.democracy.app.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import `in`.democracy.app.io.RequestAPIs
@@ -10,12 +10,9 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
     var errorLogin = VolatileLiveData<String>()
 
     /**
-     * API to check user credentials
-     *
-     * @param email entered password by user
-     * @param password entered password by user
+     * API to fetch states
      */
-    fun login(email: String, password: String) {
+    fun getStates() {
         viewModelScope.launchWithProgress {
 //            val login = if (BuildConfig.APP_TYPE == "ONE") api.getSONEToken(
 //                email, password, APIEndPoints.DAART

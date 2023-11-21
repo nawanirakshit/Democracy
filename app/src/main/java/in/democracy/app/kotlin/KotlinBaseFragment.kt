@@ -83,7 +83,8 @@ abstract class KotlinBaseFragment(@LayoutRes val view: Int = 0) : Fragment() {
         printLogs("onCreateView", javaClass.simpleName)
 
         requireActivity().onBackPressed {
-            (activity as KotlinBaseActivity).checkBackPressEvent()
+            if (activity != null)
+                (activity as KotlinBaseActivity).checkBackPressEvent()
         }
 
         return inflater.inflate(view, container, false)

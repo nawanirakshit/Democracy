@@ -11,7 +11,7 @@ import org.koin.core.context.startKoin
 class ApplicationClass : Application() {
 
     companion object {
-        const val notificationChannelID = "TestChannel"
+        const val notificationChannelID = "Democracy App Channel"
 
         private lateinit var instance: ApplicationClass
 

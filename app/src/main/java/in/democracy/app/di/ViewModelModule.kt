@@ -1,6 +1,6 @@
 package `in`.democracy.app.di
 
-import democracy.app.viewmodel.MainViewModel
+import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
