@@ -6,6 +6,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import `in`.democracy.app.R
+import `in`.democracy.app.config.IntentKey
+import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
@@ -25,7 +27,7 @@ class WardFragment : KotlinBaseFragment(R.layout.fragment_ward) {
         )
     }
 
-    private fun onSelect(ward: String) {
+    private fun onSelect(ward: ResponseWards) {
         showToast("Selected ward is $ward")
 //        replaceFragment<DistrictFragment> {
 //            putString(IntentKey.PERM_STATE, state)
@@ -44,6 +46,16 @@ class WardFragment : KotlinBaseFragment(R.layout.fragment_ward) {
         requireView().findViewById<AppCompatImageView>(R.id.button_close).setOnClickListener {
             (activity as KotlinBaseActivity).checkBackPressEvent()
         }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            hideLoading()
+            showToast(it)
+        }
+
+        viewModel.successWard.observe(viewLifecycleOwner){
+            hideLoading()
+            adapter.addNewList(it)
+        }
     }
 
     private fun initViews() {
@@ -51,9 +63,11 @@ class WardFragment : KotlinBaseFragment(R.layout.fragment_ward) {
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
 
-        for (n in 1 until  40) {
-            adapter.addtoList("Ward #$n")
-        }
-
+        showLoading()
+        viewModel.getWards(
+            arguments?.getString(IntentKey.PERM_STATE)!!,
+            arguments?.getString(IntentKey.PERM_DISTRICT)!!,
+            arguments?.getString(IntentKey.PERM_BLOCK)!!
+        )
     }
 }

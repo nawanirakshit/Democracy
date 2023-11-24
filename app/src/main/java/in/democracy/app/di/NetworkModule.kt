@@ -45,7 +45,7 @@ val networkModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("http://democracy.pickyouropinion.com/api/")
             .addConverterFactory(GsonConverterFactory.create(get()))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

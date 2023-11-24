@@ -4,12 +4,18 @@ object IntentKey {
     const val PERM_KEY = "perm_key"
     const val PERM_STATE = "state"
     const val PERM_DISTRICT = "district"
-    const val PERM_CITY = "city"
+    const val PERM_BLOCK = "block"
     const val PERM_WARD = "ward"
 }
 
 object APIEndPoints {
     const val APP_ID = "appid=com.`in`.democracy.app"
+    const val INIT = "init"
+    const val COUNTRIES = "get-countries"
+    const val STATES = "get-states"
+    const val DISTRICTS = "get-districts"
+    const val BLOCKS = "get-blocks"
+    const val WARDS = "get-wards"
 }
 
 object FragmentResult {

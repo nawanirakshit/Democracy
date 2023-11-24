@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import `in`.democracy.app.R
 import `in`.democracy.app.config.IntentKey
+import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.kotlin.replaceFragment
-import `in`.democracy.app.ui.city.CityFragment
+import `in`.democracy.app.ui.blocks.BlockFragment
+import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 
@@ -27,9 +29,9 @@ class DistrictFragment : KotlinBaseFragment(R.layout.fragment_district) {
         )
     }
 
-    private fun onSelect(district: String) {
-        replaceFragment<CityFragment> {
-            putString(IntentKey.PERM_DISTRICT, district)
+    private fun onSelect(district: ResponseWards) {
+        replaceFragment<BlockFragment> {
+            putString(IntentKey.PERM_DISTRICT, district.district)
             putString(IntentKey.PERM_STATE, arguments?.getString(IntentKey.PERM_STATE))
         }
     }
@@ -46,6 +48,16 @@ class DistrictFragment : KotlinBaseFragment(R.layout.fragment_district) {
         requireView().findViewById<AppCompatImageView>(R.id.button_close).setOnClickListener {
             (activity as KotlinBaseActivity).checkBackPressEvent()
         }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            hideLoading()
+            showToast(it)
+        }
+
+        viewModel.successDistrict.observe(viewLifecycleOwner){
+            hideLoading()
+            adapter.addNewList(it)
+        }
     }
 
     private fun initViews() {
@@ -53,9 +65,7 @@ class DistrictFragment : KotlinBaseFragment(R.layout.fragment_district) {
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
 
-        for (n in 1 until 13) {
-            adapter.addtoList("Dehradun $n")
-        }
-
+        showLoading()
+        viewModel.getDistricts(arguments?.getString(IntentKey.PERM_STATE)!!)
     }
 }
