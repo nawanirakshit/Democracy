@@ -2,6 +2,7 @@ package `in`.democracy.app.config
 
 object IntentKey {
     const val PERM_KEY = "perm_key"
+    const val PERM_COUNTRY = "country"
     const val PERM_STATE = "state"
     const val PERM_DISTRICT = "district"
     const val PERM_BLOCK = "block"
@@ -16,6 +17,8 @@ object APIEndPoints {
     const val DISTRICTS = "get-districts"
     const val BLOCKS = "get-blocks"
     const val WARDS = "get-wards"
+    const val ATTENDEES = "get-attendees"
+    const val LOGIN = "login"
 }
 
 object FragmentResult {

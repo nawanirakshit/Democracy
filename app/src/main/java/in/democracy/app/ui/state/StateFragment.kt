@@ -7,6 +7,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import `in`.democracy.app.R
+import `in`.democracy.app.config.IntentKey
+import `in`.democracy.app.config.IntentKey.PERM_COUNTRY
 import `in`.democracy.app.config.IntentKey.PERM_STATE
 import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseFragment
@@ -31,6 +33,7 @@ class StateFragment : KotlinBaseFragment(R.layout.fragment_states) {
 
     private fun onSelect(state: ResponseWards) {
         replaceFragment<DistrictFragment> {
+            putString(PERM_COUNTRY, arguments?.getString(PERM_COUNTRY))
             putString(PERM_STATE, state.state)
         }
     }
@@ -56,17 +59,11 @@ class StateFragment : KotlinBaseFragment(R.layout.fragment_states) {
     }
 
     private fun initViews() {
-
-        val imageViewHelp: AppCompatImageView = requireView().findViewById(R.id.iv_help)
-        imageViewHelp.setOnClickListener {
-            showDialogFragment<SupportDialogFragment>()
-        }
-
         mRecycler = requireView().findViewById(R.id.recycler_state)
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
 
         showLoading()
-        viewModel.getStates()
+        viewModel.getStates(arguments?.getString(PERM_COUNTRY)!!)
     }
 }

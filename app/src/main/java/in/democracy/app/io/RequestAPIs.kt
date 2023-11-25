@@ -1,5 +1,6 @@
 package `in`.democracy.app.io
 
+import democracy.app.io.model.ResponseLogin
 import `in`.democracy.app.config.APIEndPoints
 import `in`.democracy.app.io.model.ResponseInit
 import `in`.democracy.app.io.model.ResponseWards
@@ -41,5 +42,19 @@ interface RequestAPIs {
         @Query("block") block: String
     ): GenericResponse<List<ResponseWards>>
 
+    @GET(APIEndPoints.ATTENDEES)
+    suspend fun getAttendees(
+        @Query("country") country: String,
+        @Query("state") state: String,
+        @Query("district") district: String,
+        @Query("block") block: String,
+        @Query("ward") ward: String
+    ): GenericResponse<List<ResponseWards>>
+
+    @GET(APIEndPoints.LOGIN)
+    suspend fun login(
+        @Query("mobile") country: String,
+        @Query("password") state: String
+    ): GenericResponse<ResponseLogin>
 
 }

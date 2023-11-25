@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import `in`.democracy.app.config.Config
 import `in`.democracy.app.io.RequestAPIs
 import `in`.democracy.app.io.model.ResponseInit
+import `in`.democracy.app.io.model.ResponseLogin
 import `in`.democracy.app.io.model.ResponseWards
+import `in`.democracy.app.io.model.User
 import `in`.democracy.app.kotlin.viewmodel.KotlinBaseViewModel
 import `in`.democracy.app.kotlin.viewmodel.VolatileLiveData
 
@@ -14,6 +16,7 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
     var successDistrict = VolatileLiveData<List<ResponseWards>>()
     var successBlock = VolatileLiveData<List<ResponseWards>>()
     var successWard = VolatileLiveData<List<ResponseWards>>()
+    var successLogin = VolatileLiveData<User>()
 
     var errorMessage = VolatileLiveData<String>()
 
@@ -33,12 +36,10 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
         }
     }
 
-    /**
-     * API to fetch states
-     */
-    fun getStates() {
+
+    fun getCountries() {
         viewModelScope.launchWithProgress {
-            val states = api.getStates("India")
+            val states = api.getCountries()
 
             states.responseChecker<List<ResponseWards>> {
                 if (it.isEmpty()) {
@@ -51,9 +52,24 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
     /**
      * API to fetch states
      */
-    fun getDistricts(state: String) {
+    fun getStates(country: String) {
         viewModelScope.launchWithProgress {
-            val states = api.getDistricts("India", state)
+            val states = api.getStates(country)
+
+            states.responseChecker<List<ResponseWards>> {
+                if (it.isEmpty()) {
+                    errorMessage.postValue("No states available as of now, try again later.")
+                } else successStates.postValue(it)
+            }
+        }
+    }
+
+    /**
+     * API to fetch states
+     */
+    fun getDistricts(country: String, state: String) {
+        viewModelScope.launchWithProgress {
+            val states = api.getDistricts(country, state)
 
             states.responseChecker<List<ResponseWards>> {
                 if (it.isEmpty()) {
@@ -63,9 +79,9 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
         }
     }
 
-    fun getBlock(state: String, district: String) {
+    fun getBlock(country: String, state: String, district: String) {
         viewModelScope.launchWithProgress {
-            val states = api.getBlocks("India", state, district)
+            val states = api.getBlocks(country, state, district)
 
             states.responseChecker<List<ResponseWards>> {
                 if (it.isEmpty()) {
@@ -75,9 +91,9 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
         }
     }
 
-    fun getWards(state: String, district: String, block: String) {
+    fun getWards(country: String, state: String, district: String, block: String) {
         viewModelScope.launchWithProgress {
-            val states = api.getWards("India", state, district, block)
+            val states = api.getWards(country, state, district, block)
 
             states.responseChecker<List<ResponseWards>> {
                 if (it.isEmpty()) {
@@ -87,4 +103,32 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
         }
     }
 
+    fun getAttendees(
+        country: String, state: String, district: String, block: String, ward: String
+    ) {
+        viewModelScope.launchWithProgress {
+            val states = api.getAttendees(country, state, district, block, ward)
+
+            states.responseChecker<List<ResponseWards>> {
+                if (it.isEmpty()) {
+                    errorMessage.postValue("No attendees available as of now, try again later.")
+                } else successWard.postValue(it)
+            }
+        }
+    }
+
+    fun checkLogin(mobile: String, password: String) {
+        viewModelScope.launchWithProgress {
+            val states = api.login(mobile, password)
+
+            states.responseChecker<ResponseLogin> {
+
+                if (it.code == 1) {
+                    successLogin.postValue(it.user)
+                } else {
+                    errorMessage.postValue(it.msg)
+                }
+            }
+        }
+    }
 }

@@ -65,6 +65,7 @@ class WardFragment : KotlinBaseFragment(R.layout.fragment_ward) {
 
         showLoading()
         viewModel.getWards(
+            arguments?.getString(IntentKey.PERM_COUNTRY)!!,
             arguments?.getString(IntentKey.PERM_STATE)!!,
             arguments?.getString(IntentKey.PERM_DISTRICT)!!,
             arguments?.getString(IntentKey.PERM_BLOCK)!!

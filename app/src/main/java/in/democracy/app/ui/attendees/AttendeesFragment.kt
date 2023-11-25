@@ -1,5 +1,6 @@
-package `in`.democracy.app.ui.blocks
+package `in`.democracy.app.ui.attendees
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
@@ -11,31 +12,25 @@ import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
-import `in`.democracy.app.kotlin.replaceFragment
-import `in`.democracy.app.ui.ward.WardFragment
+import `in`.democracy.app.ui.login.LoginActivity
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 
-class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
+class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
 
     private val viewModel: MainViewModel by inject()
 
     private lateinit var mRecycler: RecyclerView
     private val adapter by lazy {
-        BlocksAdapter(
+        AttendeesAdapter(
             this::onSelect,
             requireContext()
         )
     }
 
-    private fun onSelect(block: ResponseWards) {
-        replaceFragment<WardFragment> {
-            putString(IntentKey.PERM_COUNTRY, arguments?.getString(IntentKey.PERM_COUNTRY))
-            putString(IntentKey.PERM_BLOCK, block.block)
-            putString(IntentKey.PERM_DISTRICT, arguments?.getString(IntentKey.PERM_DISTRICT))
-            putString(IntentKey.PERM_STATE, arguments?.getString(IntentKey.PERM_STATE))
-        }
+    private fun onSelect(attendee: ResponseWards) {
+        startActivity(Intent(activity, LoginActivity::class.java))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +39,22 @@ class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
         initViews()
 
         observeViews()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        //added here to refresh data if user is logged in
+        showLoading()
+        viewModel.getAttendees(
+            arguments?.getString(IntentKey.PERM_COUNTRY)!!,
+            arguments?.getString(IntentKey.PERM_STATE)!!,
+            arguments?.getString(IntentKey.PERM_DISTRICT)!!,
+            arguments?.getString(IntentKey.PERM_BLOCK)!!,
+            arguments?.getString(IntentKey.PERM_WARD)!!
+        )
+
+
     }
 
     private fun observeViews() {
@@ -56,7 +67,7 @@ class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
             showToast(it)
         }
 
-        viewModel.successBlock.observe(viewLifecycleOwner){
+        viewModel.successBlock.observe(viewLifecycleOwner) {
             hideLoading()
             adapter.addNewList(it)
         }
@@ -66,13 +77,5 @@ class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
         mRecycler = requireView().findViewById(R.id.recycler_city)
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
-
-        showLoading()
-        viewModel.getBlock(
-            arguments?.getString(IntentKey.PERM_COUNTRY)!!,
-            arguments?.getString(IntentKey.PERM_STATE)!!,
-            arguments?.getString(IntentKey.PERM_DISTRICT)!!
-        )
-
     }
 }

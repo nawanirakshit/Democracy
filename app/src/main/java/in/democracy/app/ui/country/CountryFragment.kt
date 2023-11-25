@@ -1,4 +1,4 @@
-package `in`.democracy.app.ui.blocks
+package `in`.democracy.app.ui.country
 
 import android.os.Bundle
 import android.view.View
@@ -12,29 +12,29 @@ import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.kotlin.replaceFragment
+import `in`.democracy.app.ui.state.StateFragment
+import `in`.democracy.app.ui.support.SupportDialogFragment
 import `in`.democracy.app.ui.ward.WardFragment
+import `in`.democracy.app.utils.extension.showDialogFragment
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 
-class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
+class CountryFragment : KotlinBaseFragment(R.layout.fragment_country) {
 
     private val viewModel: MainViewModel by inject()
 
     private lateinit var mRecycler: RecyclerView
     private val adapter by lazy {
-        BlocksAdapter(
+        CountryAdapter(
             this::onSelect,
             requireContext()
         )
     }
 
-    private fun onSelect(block: ResponseWards) {
-        replaceFragment<WardFragment> {
-            putString(IntentKey.PERM_COUNTRY, arguments?.getString(IntentKey.PERM_COUNTRY))
-            putString(IntentKey.PERM_BLOCK, block.block)
-            putString(IntentKey.PERM_DISTRICT, arguments?.getString(IntentKey.PERM_DISTRICT))
-            putString(IntentKey.PERM_STATE, arguments?.getString(IntentKey.PERM_STATE))
+    private fun onSelect(country: ResponseWards) {
+        replaceFragment<StateFragment> {
+            putString(IntentKey.PERM_COUNTRY, country.country)
         }
     }
 
@@ -56,23 +56,23 @@ class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
             showToast(it)
         }
 
-        viewModel.successBlock.observe(viewLifecycleOwner){
+        viewModel.successBlock.observe(viewLifecycleOwner) {
             hideLoading()
             adapter.addNewList(it)
         }
     }
 
     private fun initViews() {
+        val imageViewHelp: AppCompatImageView = requireView().findViewById(R.id.iv_help)
+        imageViewHelp.setOnClickListener {
+            showDialogFragment<SupportDialogFragment>()
+        }
+
         mRecycler = requireView().findViewById(R.id.recycler_city)
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
 
         showLoading()
-        viewModel.getBlock(
-            arguments?.getString(IntentKey.PERM_COUNTRY)!!,
-            arguments?.getString(IntentKey.PERM_STATE)!!,
-            arguments?.getString(IntentKey.PERM_DISTRICT)!!
-        )
-
+        viewModel.getCountries()
     }
 }

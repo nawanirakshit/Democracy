@@ -31,6 +31,7 @@ class DistrictFragment : KotlinBaseFragment(R.layout.fragment_district) {
 
     private fun onSelect(district: ResponseWards) {
         replaceFragment<BlockFragment> {
+            putString(IntentKey.PERM_COUNTRY, arguments?.getString(IntentKey.PERM_COUNTRY))
             putString(IntentKey.PERM_DISTRICT, district.district)
             putString(IntentKey.PERM_STATE, arguments?.getString(IntentKey.PERM_STATE))
         }
@@ -54,7 +55,7 @@ class DistrictFragment : KotlinBaseFragment(R.layout.fragment_district) {
             showToast(it)
         }
 
-        viewModel.successDistrict.observe(viewLifecycleOwner){
+        viewModel.successDistrict.observe(viewLifecycleOwner) {
             hideLoading()
             adapter.addNewList(it)
         }
@@ -66,6 +67,9 @@ class DistrictFragment : KotlinBaseFragment(R.layout.fragment_district) {
         mRecycler.adapter = adapter
 
         showLoading()
-        viewModel.getDistricts(arguments?.getString(IntentKey.PERM_STATE)!!)
+        viewModel.getDistricts(
+            arguments?.getString(IntentKey.PERM_COUNTRY)!!,
+            arguments?.getString(IntentKey.PERM_STATE)!!
+        )
     }
 }
