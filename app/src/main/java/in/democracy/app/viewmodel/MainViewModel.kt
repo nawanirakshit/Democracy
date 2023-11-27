@@ -17,6 +17,7 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
     var successBlock = VolatileLiveData<List<ResponseWards>>()
     var successWard = VolatileLiveData<List<ResponseWards>>()
     var successLogin = VolatileLiveData<User>()
+    var successAttendance = VolatileLiveData<Boolean>()
 
     var errorMessage = VolatileLiveData<String>()
 
@@ -131,4 +132,21 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
             }
         }
     }
+
+    fun markAttendance(attendee_id: String, status: String) {
+        viewModelScope.launchWithProgress {
+            val states =
+                api.markAttendance(Config.userPhone, Config.userPassword, attendee_id, status)
+
+            states.responseChecker<ResponseLogin> {
+
+                errorMessage.postValue(it.msg)
+                if (it.code == 1) {
+                    successAttendance.postValue(true)
+                } else successAttendance.postValue(false)
+            }
+        }
+
+    }
+
 }

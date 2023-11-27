@@ -16,5 +16,6 @@ data class User(
     val status: String,
     val ua: String,
     val ward: String,
-    val ward_id: String
+    val ward_id: String,
+    val block_id: String
 )

@@ -25,7 +25,7 @@ class MainActivity : KotlinBaseActivity() {
 
     private fun observeViews() {
         viewModel.successInit.observe(this) {
-            addFragment<CountryFragment>()
+            addFragment<OptionFragment>()
         }
     }
 }

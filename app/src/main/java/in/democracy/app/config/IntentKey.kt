@@ -7,6 +7,11 @@ object IntentKey {
     const val PERM_DISTRICT = "district"
     const val PERM_BLOCK = "block"
     const val PERM_WARD = "ward"
+    const val PERM_WARD_BUNDLE = "ward_bundle"
+    const val PERM_BLOCK_ID = "block_id"
+    const val PERM_WARD_ID = "ward_id"
+
+    const val PERM_ATTENDEE_ID = "attendee_id"
 }
 
 object APIEndPoints {
@@ -19,6 +24,8 @@ object APIEndPoints {
     const val WARDS = "get-wards"
     const val ATTENDEES = "get-attendees"
     const val LOGIN = "login"
+    const val ATTENDANCE = "attendance"
+
 }
 
 object FragmentResult {

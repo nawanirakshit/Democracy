@@ -7,12 +7,17 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import `in`.democracy.app.R
+import `in`.democracy.app.config.Config
 import `in`.democracy.app.config.IntentKey
+import `in`.democracy.app.config.IntentKey.PERM_ATTENDEE_ID
+import `in`.democracy.app.config.IntentKey.PERM_WARD_BUNDLE
 import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
+import `in`.democracy.app.kotlin.replaceFragment
 import `in`.democracy.app.ui.login.LoginActivity
+import `in`.democracy.app.ui.attendance.AttendanceFragment
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
@@ -30,7 +35,16 @@ class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
     }
 
     private fun onSelect(attendee: ResponseWards) {
-        startActivity(Intent(activity, LoginActivity::class.java))
+
+        if (Config.userPhone.isNotEmpty() && Config.userPassword.isNotEmpty()) {
+            replaceFragment<AttendanceFragment> {
+                putString(PERM_ATTENDEE_ID, attendee.id)
+            }
+        } else {
+            val bundle = Bundle()
+            bundle.putParcelable(PERM_WARD_BUNDLE, attendee)
+            startActivity(Intent(activity, LoginActivity::class.java))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,8 +64,8 @@ class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
             arguments?.getString(IntentKey.PERM_COUNTRY)!!,
             arguments?.getString(IntentKey.PERM_STATE)!!,
             arguments?.getString(IntentKey.PERM_DISTRICT)!!,
-            arguments?.getString(IntentKey.PERM_BLOCK)!!,
-            arguments?.getString(IntentKey.PERM_WARD)!!
+            arguments?.getString(IntentKey.PERM_BLOCK_ID)!!,
+            arguments?.getString(IntentKey.PERM_WARD_ID)!!
         )
 
 
