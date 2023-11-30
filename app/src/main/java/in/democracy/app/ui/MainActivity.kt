@@ -3,10 +3,7 @@ package `in`.democracy.app.ui
 import android.os.Bundle
 import `in`.democracy.app.R
 import `in`.democracy.app.kotlin.KotlinBaseActivity
-import `in`.democracy.app.kotlin.addFragment
 import `in`.democracy.app.kotlin.replaceFragment
-import `in`.democracy.app.ui.country.CountryFragment
-import `in`.democracy.app.ui.state.StateFragment
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 
@@ -25,7 +22,7 @@ class MainActivity : KotlinBaseActivity() {
 
     private fun observeViews() {
         viewModel.successInit.observe(this) {
-            addFragment<OptionFragment>()
+            replaceFragment<OptionFragment>()
         }
     }
 }

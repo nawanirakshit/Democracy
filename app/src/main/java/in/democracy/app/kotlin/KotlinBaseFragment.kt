@@ -76,15 +76,12 @@ abstract class KotlinBaseFragment(@LayoutRes val view: Int = 0) : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         printLogs("onCreateView", javaClass.simpleName)
 
         requireActivity().onBackPressed {
-            if (activity != null)
-                (activity as KotlinBaseActivity).checkBackPressEvent()
+            if (activity != null) (activity as KotlinBaseActivity).checkBackPressEvent()
         }
 
         return inflater.inflate(view, container, false)
@@ -134,11 +131,9 @@ abstract class KotlinBaseFragment(@LayoutRes val view: Int = 0) : Fragment() {
 }
 
 fun FragmentActivity.onBackPressed(callback: () -> Unit) {
-    onBackPressedDispatcher.addCallback(this,
-        object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                callback()
-            }
+    onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            callback()
         }
-    )
+    })
 }

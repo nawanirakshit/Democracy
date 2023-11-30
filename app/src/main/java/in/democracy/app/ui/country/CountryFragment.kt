@@ -14,7 +14,6 @@ import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.kotlin.replaceFragment
 import `in`.democracy.app.ui.state.StateFragment
 import `in`.democracy.app.ui.support.SupportDialogFragment
-import `in`.democracy.app.ui.ward.WardFragment
 import `in`.democracy.app.utils.extension.showDialogFragment
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
@@ -63,11 +62,6 @@ class CountryFragment : KotlinBaseFragment(R.layout.fragment_country) {
     }
 
     private fun initViews() {
-        val imageViewHelp: AppCompatImageView = requireView().findViewById(R.id.iv_help)
-        imageViewHelp.setOnClickListener {
-            showDialogFragment<SupportDialogFragment>()
-        }
-
         mRecycler = requireView().findViewById(R.id.recycler_county)
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter

@@ -7,10 +7,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import `in`.democracy.app.R
-import `in`.democracy.app.config.Config
 import `in`.democracy.app.config.IntentKey
 import `in`.democracy.app.config.IntentKey.PERM_ATTENDEE_ID
-import `in`.democracy.app.config.IntentKey.PERM_WARD_BUNDLE
+import `in`.democracy.app.config.IntentKey.PERM_ATTENDEE_STATUS
+import `in`.democracy.app.config.IntentKey.PERM_KEY
 import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
@@ -35,16 +35,17 @@ class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_attendees) {
     }
 
     private fun onSelect(attendee: ResponseWards) {
-
-        if (Config.userPhone.isNotEmpty() && Config.userPassword.isNotEmpty()) {
+        if (arguments?.getBoolean(IntentKey.PERM_FROM_LOGIN)!!) {
             replaceFragment<AttendanceFragment> {
                 putString(PERM_ATTENDEE_ID, attendee.id)
+                putString(PERM_ATTENDEE_STATUS, attendee.status)
             }
         } else {
-            val bundle = Bundle()
-            bundle.putParcelable(PERM_WARD_BUNDLE, attendee)
             val intent = Intent(activity, LoginActivity::class.java)
-            intent.putExtra(PERM_WARD_BUNDLE, bundle)
+            val bundle = Bundle()
+            bundle.putString(PERM_ATTENDEE_ID, attendee.id)
+            bundle.putString(PERM_ATTENDEE_STATUS, attendee.status)
+            intent.putExtra(PERM_KEY, bundle)
             startActivity(intent)
         }
     }

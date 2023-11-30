@@ -13,7 +13,7 @@ import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.kotlin.replaceFragment
-import `in`.democracy.app.ui.attendance.AttendanceFragment
+import `in`.democracy.app.ui.attendees.AttendeesFragment
 import `in`.democracy.app.ui.login.LoginActivity
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
@@ -32,8 +32,14 @@ class WardFragment : KotlinBaseFragment(R.layout.fragment_ward) {
     }
 
     private fun onSelect(ward: ResponseWards) {
-        val intent = Intent(activity, LoginActivity::class.java)
-        startActivity(intent)
+        replaceFragment<AttendeesFragment> {
+            putString(IntentKey.PERM_COUNTRY, arguments?.getString(IntentKey.PERM_COUNTRY)!!)
+            putString(IntentKey.PERM_STATE, arguments?.getString(IntentKey.PERM_STATE)!!)
+            putString(IntentKey.PERM_DISTRICT, arguments?.getString(IntentKey.PERM_DISTRICT)!!)
+            putString(IntentKey.PERM_BLOCK_ID, arguments?.getString(IntentKey.PERM_BLOCK_ID)!!)
+            putString(IntentKey.PERM_WARD_ID, ward.id)
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

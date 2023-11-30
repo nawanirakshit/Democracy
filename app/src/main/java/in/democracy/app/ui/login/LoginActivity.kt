@@ -6,8 +6,10 @@ import androidx.appcompat.widget.AppCompatEditText
 import `in`.democracy.app.R
 import `in`.democracy.app.config.Config
 import `in`.democracy.app.config.IntentKey
+import `in`.democracy.app.config.IntentKey.PERM_ATTENDEE_STATUS
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.replaceFragment
+import `in`.democracy.app.ui.attendance.AttendanceFragment
 import `in`.democracy.app.ui.attendees.AttendeesFragment
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
@@ -38,14 +40,32 @@ class LoginActivity : KotlinBaseActivity() {
             Config.userPhone = it.mobile
             Config.userPassword = mPassword.text.toString().trim()
 
-            val blockId = if (it.block_id == null) "1" else it.block_id
+            val attendeeId =
+                intent.getBundleExtra(IntentKey.PERM_KEY)?.getString(IntentKey.PERM_ATTENDEE_ID)
 
-            replaceFragment<AttendeesFragment> {
-                putString(IntentKey.PERM_COUNTRY, it.country)
-                putString(IntentKey.PERM_STATE, it.state)
-                putString(IntentKey.PERM_DISTRICT, it.district)
-                putString(IntentKey.PERM_BLOCK_ID, blockId)
-                putString(IntentKey.PERM_WARD_ID, it.ward_id)
+            if (attendeeId == null) {
+                replaceFragment<AttendeesFragment> {
+                    putString(IntentKey.PERM_COUNTRY, it.country)
+                    putString(IntentKey.PERM_STATE, it.state)
+                    putString(IntentKey.PERM_DISTRICT, it.district)
+                    putString(IntentKey.PERM_BLOCK_ID, it.block_id)
+                    putString(IntentKey.PERM_WARD_ID, it.ward_id)
+                    putBoolean(IntentKey.PERM_FROM_LOGIN, true)
+                    putString(PERM_ATTENDEE_STATUS, it.status)
+                    putString(
+                        IntentKey.PERM_ATTENDEE_ID,
+                        getBundle(IntentKey.PERM_KEY)?.getString(IntentKey.PERM_ATTENDEE_ID)
+                    )
+                }
+            } else {
+
+                val attendeeStatus =
+                    intent.getBundleExtra(IntentKey.PERM_KEY)?.getString(IntentKey.PERM_ATTENDEE_STATUS)
+
+                replaceFragment<AttendanceFragment> {
+                    putString(IntentKey.PERM_ATTENDEE_ID, attendeeId)
+                    putString(PERM_ATTENDEE_STATUS, attendeeStatus)
+                }
             }
         }
     }

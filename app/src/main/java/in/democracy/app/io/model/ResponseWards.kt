@@ -15,5 +15,6 @@ data class ResponseWards(
     val ward_id: String,
     val name: String,
     val mobile: String,
-    val status: String
+    val status: String,
+    val updated_on: String
 ) : Parcelable

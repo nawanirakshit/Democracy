@@ -524,8 +524,10 @@ fun AppCompatActivity.onBackPressed(isEnabled: Boolean, callback: () -> Unit) {
 
 fun AppCompatActivity.checkBackPressEvent() {
     if (supportFragmentManager.backStackEntryCount == 1) {
+        println("COUNT IS 1 >>>>>>>>>>")
         finish()
     } else {
+        println("checkBackPressEvent  count is not 1>>>>>>>>>>")
         supportFragmentManager.popBackStack()
     }
 }

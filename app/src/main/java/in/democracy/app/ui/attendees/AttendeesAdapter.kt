@@ -18,16 +18,30 @@ class AttendeesAdapter(private val itemClick: (ResponseWards) -> Unit, val conte
         val cardAttendee = holder.itemView.findViewById<CardView>(R.id.card_attendee)
         val attendeeName = holder.itemView.findViewById<AppCompatTextView>(R.id.tv_name)
         val attendeeAddress = holder.itemView.findViewById<AppCompatTextView>(R.id.tv_address)
+        val attendeeMobile = holder.itemView.findViewById<AppCompatTextView>(R.id.tv_mobile)
+        val attendeeStatus = holder.itemView.findViewById<AppCompatTextView>(R.id.tv_status)
+        val attendeeLastUpdated =
+            holder.itemView.findViewById<AppCompatTextView>(R.id.tv_last_updated)
 
+        val status = data.status
         val address =
             "${data.ward}, ${data.block}, ${data.state}, ${data.district}, ${data.state}, ${data.country}"
 
+        attendeeMobile.text = data.mobile
         attendeeAddress.text = address
         attendeeName.text = data.name
+        attendeeStatus.text = "Status: $status"
+        attendeeLastUpdated.text = "Last updated: ${data.updated_on}"
 
-        if (data.status == "Present") {
-            cardAttendee.setCardBackgroundColor(Color.parseColor("#008000"));
-        } else cardAttendee.setCardBackgroundColor(Color.RED);
+        when (status) {
+            "Present" -> {
+                cardAttendee.setCardBackgroundColor(Color.parseColor("#008000"));
+            }
+            "Absent" -> {
+                cardAttendee.setCardBackgroundColor(Color.RED);
+            }
+            else -> cardAttendee.setCardBackgroundColor(Color.parseColor("#FFA500"))
+        };
 
         holder.itemView.clickWithDebounce {
             itemClick.invoke(list[holder.adapterPosition])

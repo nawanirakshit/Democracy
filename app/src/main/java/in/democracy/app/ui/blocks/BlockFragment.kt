@@ -33,6 +33,8 @@ class BlockFragment : KotlinBaseFragment(R.layout.fragment_city) {
         replaceFragment<WardFragment> {
             putString(IntentKey.PERM_COUNTRY, arguments?.getString(IntentKey.PERM_COUNTRY))
             putString(IntentKey.PERM_BLOCK, block.block)
+            putString(IntentKey.PERM_BLOCK_ID, block.id)
+
             putString(IntentKey.PERM_DISTRICT, arguments?.getString(IntentKey.PERM_DISTRICT))
             putString(IntentKey.PERM_STATE, arguments?.getString(IntentKey.PERM_STATE))
         }

@@ -46,6 +46,20 @@ class AttendanceFragment : KotlinBaseFragment(R.layout.fragment_attendance) {
                 selectedAttendanceType
             )
         }
+
+        val radioPresent = requireView().findViewById<RadioButton>(R.id.radio_present)
+        val radioAbsent = requireView().findViewById<RadioButton>(R.id.radio_absent)
+        val radioNone = requireView().findViewById<RadioButton>(R.id.radio_none)
+
+        when (arguments?.getString(IntentKey.PERM_ATTENDEE_STATUS)!!) {
+            "Present" -> {
+                radioPresent.isChecked = true
+            }
+            "Absent" -> {
+                radioAbsent.isChecked = true
+            }
+            else -> radioNone.isChecked = true
+        };
     }
 
     private fun observeViews() {

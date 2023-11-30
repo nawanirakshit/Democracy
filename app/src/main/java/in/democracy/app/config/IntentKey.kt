@@ -10,8 +10,9 @@ object IntentKey {
     const val PERM_WARD_BUNDLE = "ward_bundle"
     const val PERM_BLOCK_ID = "block_id"
     const val PERM_WARD_ID = "ward_id"
-
+    const val PERM_ATTENDEE_STATUS = "attendee_status"
     const val PERM_ATTENDEE_ID = "attendee_id"
+    const val PERM_FROM_LOGIN = "from_login"
 }
 
 object APIEndPoints {

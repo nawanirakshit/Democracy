@@ -11,7 +11,9 @@ import `in`.democracy.app.config.IntentKey
 import `in`.democracy.app.config.IntentKey.PERM_COUNTRY
 import `in`.democracy.app.config.IntentKey.PERM_STATE
 import `in`.democracy.app.io.model.ResponseWards
+import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
+import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.kotlin.replaceFragment
 import `in`.democracy.app.ui.districts.DistrictFragment
 import `in`.democracy.app.ui.support.SupportDialogFragment
@@ -56,6 +58,11 @@ class StateFragment : KotlinBaseFragment(R.layout.fragment_states) {
             hideLoading()
             adapter.addNewList(it)
         }
+
+        requireView().findViewById<AppCompatImageView>(R.id.button_close).setOnClickListener {
+            (activity as KotlinBaseActivity).checkBackPressEvent()
+        }
+
     }
 
     private fun initViews() {

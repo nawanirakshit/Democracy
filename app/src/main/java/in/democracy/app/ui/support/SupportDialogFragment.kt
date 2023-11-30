@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import `in`.democracy.app.R
 import `in`.democracy.app.config.Config
 import `in`.democracy.app.utils.RoundedBottomSheetDialogFragment
+import `in`.democracy.app.utils.extension.hideKeyboard
 
 class SupportDialogFragment :
     RoundedBottomSheetDialogFragment(R.layout.dialog_support) {
@@ -16,13 +17,13 @@ class SupportDialogFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        hideKeyboard()
         view.findViewById<AppCompatImageView>(R.id.iv_close).setOnClickListener {
             dismissAllowingStateLoss()
         }
 
         val mPhone: TextView = view.findViewById(R.id.tv_phone)
         val mEmail: TextView = view.findViewById(R.id.tv_email)
-
 
         mPhone.text = Config.phone
         mEmail.text = Config.email
