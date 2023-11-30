@@ -5,8 +5,7 @@ import `in`.democracy.app.io.model.ResponseInit
 import `in`.democracy.app.io.model.ResponseLogin
 import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.io.networking.coroutineRequestAdapter.GenericResponse
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RequestAPIs {
 
@@ -51,18 +50,20 @@ interface RequestAPIs {
         @Query("ward_id") ward: String
     ): GenericResponse<List<ResponseWards>>
 
-    @GET(APIEndPoints.LOGIN)
+    @FormUrlEncoded
+    @POST(APIEndPoints.LOGIN)
     suspend fun login(
-        @Query("mobile") country: String,
-        @Query("password") state: String
+        @Field("mobile") country: String,
+        @Field("password") state: String
     ): GenericResponse<ResponseLogin>
 
-    @GET(APIEndPoints.ATTENDANCE)
+    @FormUrlEncoded
+    @POST(APIEndPoints.ATTENDANCE)
     suspend fun markAttendance(
-        @Query("user_mobile") user_mobile: String,
-        @Query("user_password") user_password: String,
-        @Query("attendee_id") attendee_id: String,
-        @Query("status") status: String
+        @Field("user_mobile") user_mobile: String,
+        @Field("user_password") user_password: String,
+        @Field("attendee_id") attendee_id: String,
+        @Field("status") status: String
     ): GenericResponse<ResponseLogin>
 
 }

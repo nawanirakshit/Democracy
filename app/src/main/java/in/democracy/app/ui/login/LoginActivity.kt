@@ -34,14 +34,17 @@ class LoginActivity : KotlinBaseActivity() {
 
         viewModel.successLogin.observe(this) {
 
+            val mPassword: AppCompatEditText = findViewById(R.id.password_input_text)
             Config.userPhone = it.mobile
-            Config.userPassword = it.password
+            Config.userPassword = mPassword.text.toString().trim()
+
+            val blockId = if (it.block_id == null) "1" else it.block_id
 
             replaceFragment<AttendeesFragment> {
                 putString(IntentKey.PERM_COUNTRY, it.country)
                 putString(IntentKey.PERM_STATE, it.state)
                 putString(IntentKey.PERM_DISTRICT, it.district)
-                putString(IntentKey.PERM_BLOCK_ID, it.block_id)
+                putString(IntentKey.PERM_BLOCK_ID, blockId)
                 putString(IntentKey.PERM_WARD_ID, it.ward_id)
             }
         }

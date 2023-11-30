@@ -16,13 +16,13 @@ import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.kotlin.replaceFragment
-import `in`.democracy.app.ui.login.LoginActivity
 import `in`.democracy.app.ui.attendance.AttendanceFragment
+import `in`.democracy.app.ui.login.LoginActivity
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 
-class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
+class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_attendees) {
 
     private val viewModel: MainViewModel by inject()
 
@@ -43,7 +43,9 @@ class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
         } else {
             val bundle = Bundle()
             bundle.putParcelable(PERM_WARD_BUNDLE, attendee)
-            startActivity(Intent(activity, LoginActivity::class.java))
+            val intent = Intent(activity, LoginActivity::class.java)
+            intent.putExtra(PERM_WARD_BUNDLE, bundle)
+            startActivity(intent)
         }
     }
 
@@ -67,8 +69,6 @@ class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
             arguments?.getString(IntentKey.PERM_BLOCK_ID)!!,
             arguments?.getString(IntentKey.PERM_WARD_ID)!!
         )
-
-
     }
 
     private fun observeViews() {
@@ -81,14 +81,14 @@ class AttendeesFragment : KotlinBaseFragment(R.layout.fragment_city) {
             showToast(it)
         }
 
-        viewModel.successBlock.observe(viewLifecycleOwner) {
+        viewModel.successAttendees.observe(viewLifecycleOwner) {
             hideLoading()
             adapter.addNewList(it)
         }
     }
 
     private fun initViews() {
-        mRecycler = requireView().findViewById(R.id.recycler_city)
+        mRecycler = requireView().findViewById(R.id.recycler_attendees)
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
     }

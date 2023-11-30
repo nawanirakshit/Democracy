@@ -12,10 +12,12 @@ import `in`.democracy.app.kotlin.viewmodel.VolatileLiveData
 
 class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
     var successInit = VolatileLiveData<Boolean>()
+    var successCountry = VolatileLiveData<List<ResponseWards>>()
     var successStates = VolatileLiveData<List<ResponseWards>>()
     var successDistrict = VolatileLiveData<List<ResponseWards>>()
     var successBlock = VolatileLiveData<List<ResponseWards>>()
     var successWard = VolatileLiveData<List<ResponseWards>>()
+    var successAttendees = VolatileLiveData<List<ResponseWards>>()
     var successLogin = VolatileLiveData<User>()
     var successAttendance = VolatileLiveData<Boolean>()
 
@@ -45,7 +47,7 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
             states.responseChecker<List<ResponseWards>> {
                 if (it.isEmpty()) {
                     errorMessage.postValue("No states available as of now, try again later.")
-                } else successStates.postValue(it)
+                } else successCountry.postValue(it)
             }
         }
     }
@@ -113,7 +115,7 @@ class MainViewModel(private val api: RequestAPIs) : KotlinBaseViewModel() {
             states.responseChecker<List<ResponseWards>> {
                 if (it.isEmpty()) {
                     errorMessage.postValue("No attendees available as of now, try again later.")
-                } else successWard.postValue(it)
+                } else successAttendees.postValue(it)
             }
         }
     }

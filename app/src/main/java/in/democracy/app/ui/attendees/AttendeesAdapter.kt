@@ -26,7 +26,7 @@ class AttendeesAdapter(private val itemClick: (ResponseWards) -> Unit, val conte
         attendeeName.text = data.name
 
         if (data.status == "Present") {
-            cardAttendee.setCardBackgroundColor(Color.GREEN);
+            cardAttendee.setCardBackgroundColor(Color.parseColor("#008000"));
         } else cardAttendee.setCardBackgroundColor(Color.RED);
 
         holder.itemView.clickWithDebounce {

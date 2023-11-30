@@ -56,7 +56,7 @@ class CountryFragment : KotlinBaseFragment(R.layout.fragment_country) {
             showToast(it)
         }
 
-        viewModel.successBlock.observe(viewLifecycleOwner) {
+        viewModel.successCountry.observe(viewLifecycleOwner) {
             hideLoading()
             adapter.addNewList(it)
         }
@@ -68,7 +68,7 @@ class CountryFragment : KotlinBaseFragment(R.layout.fragment_country) {
             showDialogFragment<SupportDialogFragment>()
         }
 
-        mRecycler = requireView().findViewById(R.id.recycler_city)
+        mRecycler = requireView().findViewById(R.id.recycler_county)
         mRecycler.layoutManager = LinearLayoutManager(requireContext())
         mRecycler.adapter = adapter
 

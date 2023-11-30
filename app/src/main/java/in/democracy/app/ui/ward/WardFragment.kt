@@ -1,5 +1,6 @@
 package `in`.democracy.app.ui.ward
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
@@ -11,6 +12,9 @@ import `in`.democracy.app.io.model.ResponseWards
 import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.checkBackPressEvent
+import `in`.democracy.app.kotlin.replaceFragment
+import `in`.democracy.app.ui.attendance.AttendanceFragment
+import `in`.democracy.app.ui.login.LoginActivity
 import `in`.democracy.app.utils.extension.showToast
 import `in`.democracy.app.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
@@ -28,10 +32,8 @@ class WardFragment : KotlinBaseFragment(R.layout.fragment_ward) {
     }
 
     private fun onSelect(ward: ResponseWards) {
-        showToast("Selected ward is $ward")
-//        replaceFragment<DistrictFragment> {
-//            putString(IntentKey.PERM_STATE, state)
-//        }
+        val intent = Intent(activity, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
