@@ -3,10 +3,13 @@ package `in`.democracy.app.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import `in`.democracy.app.R
+import `in`.democracy.app.kotlin.KotlinBaseActivity
 import `in`.democracy.app.kotlin.KotlinBaseFragment
 import `in`.democracy.app.kotlin.addFragment
+import `in`.democracy.app.kotlin.checkBackPressEvent
 import `in`.democracy.app.ui.country.CountryFragment
 import `in`.democracy.app.ui.login.LoginActivity
 import `in`.democracy.app.viewmodel.MainViewModel
@@ -23,6 +26,10 @@ class OptionFragment : KotlinBaseFragment(R.layout.fragment_option) {
 
         view.findViewById<CardView>(R.id.card_search).setOnClickListener {
             addFragment<CountryFragment>()
+        }
+
+        requireView().findViewById<AppCompatImageView>(R.id.button_close).setOnClickListener {
+            (activity as KotlinBaseActivity).checkBackPressEvent()
         }
     }
 }
